@@ -1,0 +1,65 @@
+<h1 class="text-center">Quản Lý Nhân Viên - Bác Sĩ Hải Style</h1>
+<div class="h2 text-center" *ngIf="msg" [ngClass]="clss">{{msg}}</div>
+<!--<div class="h2 text-center" *ngIf="errMsg" [ngClass]="clss">{{errMsg}}</div>-->
+<div class="container-fluid">
+  <div class="container-sm">
+    <div class="row p-2">
+      <div class="col-auto p-2">
+        <button class="btn btn-danger" type="button" (click)="deleteProducts()">Delete Selected Users(s)</button>
+      </div>
+      <div class="col-auto p-2">
+        <a href="#" routerLink="/layout/create/" class="btn btn-success">Create New User</a>
+      </div>
+      <div class="col-auto p-2"><input type="text" class="form-control" name="firstName" [(ngModel)]="firstName"
+                                       (ngModelChange)="Search()" placeholder="Enter FirstName for searching"></div>
+      <div class="col-auto p-2"><input type="text" class="form-control" name="id" [(ngModel)]="id"
+                                       (ngModelChange)="SearchbyID()" placeholder="Enter ID for searching"></div>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div class="container-sm ">
+      <table class="table table-dark table-bordered border-danger text-center">
+        <thead>
+        <tr>
+          <th><input type="checkbox" [checked]="isAllCheckBoxChecked()" (change)="checkAllCheckBox($event)"></th>
+          <th (click)="sort('id')">User ID <i class="fa fa-sort" style="color: orange; font-size:10px">S</i></th>
+          <th (click)="sortByFirstName('firstName')">First Name <i class="fa fa-sort"
+                                                                   style="color: orange ; font-size:10px">S</i></th>
+          <th (click)="sortByLastName('lastName')">Last Name <i class="fa fa-sort"
+                                                                style="color: orange ; font-size:10px">S</i></th>
+          <th (click)="sortByEmail('email')">Email <i class="fa fa-sort" style="color: orange ; font-size:10px">S</i>
+          </th>
+          <th>Mobile</th>
+          <th (click)="sortBySalary('salary')">Salary <i class="fa fa-sort" style="color: orange ; font-size:10px">S</i>
+          </th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          *ngFor="let user of users | orderBy: key: reserve | paginate:{itemsPerPage:8, currentPage:p}; let i = index; let odd = odd"
+          [ngClass]="odd ? 'odd_col' : 'even_col'">
+          <td><input type="checkbox" value="{{user.id}}" [(ngModel)]="users[i].checked"></td>
+          <td>{{user.id}}</td>
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.mobile}}</td>
+          <td>{{user.salary}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="update(user.id)">Update</button>&nbsp;&nbsp;
+          </td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
